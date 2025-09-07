@@ -1,6 +1,5 @@
 package frc.robot.subsystems;
 
-
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
@@ -13,17 +12,17 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class ElevatorSubsystem extends SubsystemBase {
-//variables
-private SparkMax m_elevatorMotor;
-private SparkMax m_elevatorFollower;
-private PIDController m_elevatorPID;
-private Encoder m_elevatorEncoder;
-private SparkMaxConfig leftConfig;
-private SparkMaxConfig rightConfig;
-public double output = 0;
-SlewRateLimiter lessFast = new SlewRateLimiter(1);
-//constructors
-    public ElevatorSubsystem(){
+
+    private SparkMax m_elevatorMotor;
+    private SparkMax m_elevatorFollower;
+    private PIDController m_elevatorPID;
+    private Encoder m_elevatorEncoder;
+    private SparkMaxConfig leftConfig;
+    private SparkMaxConfig rightConfig;
+    public double output = 0;
+    SlewRateLimiter lessFast = new SlewRateLimiter(1);
+
+    public ElevatorSubsystem() {
         m_elevatorMotor = new SparkMax(Constants.ElevatorConstants.kElevatorMotorCanId, MotorType.kBrushless);
         m_elevatorFollower = new SparkMax(Constants.ElevatorConstants.kElevatorFollowerCanId, MotorType.kBrushless);
         
@@ -43,30 +42,25 @@ SlewRateLimiter lessFast = new SlewRateLimiter(1);
         m_elevatorFollower.configure(rightConfig, null, null);
     }
 
-    // methods
-
-    public void setElevatorPower(double elevatorPower){
+    public void setElevatorPower(double elevatorPower) {
         m_elevatorMotor.set(elevatorPower);
         m_elevatorFollower.set(elevatorPower);
-        //System.out.println("Encoder Position" + m_elevatorEncoder.getDistance());
-
     }
-    public void elevatorPIDControl(double setPosition){
+
+    public void elevatorPIDControl(double setPosition) {
         output = m_elevatorPID.calculate(m_elevatorEncoder.getDistance(), setPosition) ;
-        //System.out.println("Encoder Position" + m_elevatorEncoder.getDistance());
-        //System.out.println("Set Position" + setPosition);
     }
 
-    public void elevatorPIDSetPower(){
+    public void elevatorPIDSetPower() {
         m_elevatorMotor.set(output);
         m_elevatorFollower.set(output);
     }
 
-    public void resetEncoder(){
+    public void resetEncoder() {
         m_elevatorEncoder.reset();
     }
     
-    public void encoderGetValue(){
+    public void encoderGetValue() {
      System.out.println("Elevator Position" + m_elevatorEncoder.getDistance());
     }
 }

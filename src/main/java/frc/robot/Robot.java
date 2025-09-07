@@ -1,6 +1,3 @@
-
-
-
 // Copyright (c) FIRST and other WPILib contributors.
 // Open Source Software; you can modify and/or share it under the terms of
 // the WPILib BSD license file in the root directory of this project.
@@ -11,14 +8,12 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.Constants.OIConstants;
-import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.ElevatorSubsystem;
 import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.StingerSubsystem;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick;
-import com.pathplanner.lib.commands.PathPlannerAuto;
 import edu.wpi.first.wpilibj.Timer;
 
 /**
@@ -29,14 +24,12 @@ public class Robot extends TimedRobot {
   private RobotContainer m_robotContainer;
 
   // Controllers
-  private final Joystick m_driverController = new Joystick(OIConstants.kDriverControllerPort);
   private final Joystick m_operatorController = new Joystick(OIConstants.kOperatorControllerPort);
 
   // Subsystems
   private final StingerSubsystem m_StingerSubsystem = new StingerSubsystem();
   private final ElevatorSubsystem m_ElevatorSubsystem = new ElevatorSubsystem();
   private final LEDSubsystem m_LedSubsystem = new LEDSubsystem();
-  private final DriveSubsystem m_robotDrive = new DriveSubsystem();  // Ensuring DriveSubsystem is properly initialized
 
   // Variables
   private double setPos = 0;
@@ -93,6 +86,19 @@ public class Robot extends TimedRobot {
     handleOperatorControls();
   }
 
+  @Override
+  public void testInit() {
+    CommandScheduler.getInstance().cancelAll();
+  }
+
+  @Override
+  public void testPeriodic() {}
+
+  /** Delays execution for a set time */
+  public void delayTimer(int seconds) {
+    Timer.delay(seconds);
+  }
+
   private void handleOperatorControls() {
     if (m_operatorController.getRawButtonPressed(1)) {
       setElevatorAndPivot(0.1, 0.5);
@@ -136,18 +142,5 @@ public class Robot extends TimedRobot {
   private void setElevatorAndPivot(double position, double angle) {
     setPos = position;
     setAng = angle;
-  }
-
-  @Override
-  public void testInit() {
-    CommandScheduler.getInstance().cancelAll();
-  }
-
-  @Override
-  public void testPeriodic() {}
-
-  /** Delays execution for a set time */
-  public void delayTimer(int seconds) {
-    Timer.delay(seconds);
   }
 }
