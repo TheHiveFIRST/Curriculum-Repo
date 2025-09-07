@@ -13,8 +13,8 @@ import frc.robot.subsystems.LEDSubsystem;
 import frc.robot.subsystems.StingerSubsystem;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.XboxController;
 
 /**
  * Main robot class extending TimedRobot.
@@ -24,7 +24,7 @@ public class Robot extends TimedRobot {
   private RobotContainer m_robotContainer;
 
   // Controllers
-  private final Joystick m_operatorController = new Joystick(OIConstants.kOperatorControllerPort);
+  private final XboxController m_operatorController = new XboxController(OIConstants.kOperatorControllerPort);
 
   // Subsystems
   private final StingerSubsystem m_StingerSubsystem = new StingerSubsystem();
